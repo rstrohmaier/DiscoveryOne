@@ -1,9 +1,9 @@
 resource "azurerm_resource_group" "example" {
   name     = "Angus_Ressources"
-  location = "West Europe"
+  location = "swedencentral"
 
   tags = {
-    environment = "Production"
+    owner = "mario.strobl@redbull.com"
   
 }
 }
