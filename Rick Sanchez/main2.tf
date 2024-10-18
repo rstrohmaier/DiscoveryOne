@@ -44,8 +44,8 @@ resource "azurerm_network_interface" "Rick_Sanchez_NIC" {
   }
   }
 
-resource "azurerm_windows_virtual_machine" "example" {
-  name                = "RickSanchez-machine"
+resource "azurerm_windows_virtual_machine" "RickSanchez-machine" {
+  name                = "Ricks-machine"
   resource_group_name = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.name
   location            = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.location
   size                = "Standard_D2_v4"
