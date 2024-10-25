@@ -43,28 +43,25 @@ resource "azurerm_network_interface" "Rick_Sanchez_NIC" {
   }
   }
  
-resource "azurerm_windows_virtual_machine" "RickSanchez-machine" {
-  name                = "Ricks-machine"
-  resource_group_name = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.name
-  location            = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.location
-  size                = "Standard_D2_v4"
-  network_interface_ids = [
-    azurerm_network_interface.Rick_Sanchez_NIC.id,
-  ]
-  admin_username     = "RickSanchez"
-  admin_password     = "GetWrecked99"  # For demonstration purposes only. Use secure methods for production.
- 
- 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
- 
-  source_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-11"
-    sku       = "win11-23h2-avd"
-    version   = "latest"
-  }
+
+
+ module "RickSanchez-vm" {
+  source                        = "./Module/VM"
+  nic_name                      = "RickSanchezVM-nic"
+  location                      = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.location
+  resource_group_name           = azurerm_resource_group.Rick_Sanchez_ResourceGroup_New.name
+  subnet_id                   = azurerm_subnet.Rick_Sanchez_Subnet.id
+  # when using vnet module:
+  // subnet_id                     = module.belka-vnet.subnet_id
+  vm_name                       = "RickSanchezVM"
+  vm_size                       = "Standard_DS1_v2"
+  os_disk_name                  = "example-os-disk"
+  image_publisher               = "Canonical"
+  image_offer                   = "UbuntuServer"
+  image_sku                     = "18.04-LTS"
+  image_version                 = "latest"
+  computer_name                 = "hostname"
+  admin_username                = "adminuser"
+  admin_password                = "Password1234!"
+  disable_password_authentication = false
 }
- 
